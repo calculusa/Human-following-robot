@@ -132,11 +132,7 @@ from IPython.display import display, HTML
 width = 640
 height = 480
 
-# display_color = widgets.Image(format='jpeg', width='45%') #determine the width of the color image
-# display_depth = widgets.Image(format='jpeg', width='45%')  #determine the width of the depth image
-# layout=widgets.Layout(width='100%')
-# sidebyside = widgets.HBox([display_color, display_depth],layout=layout) #horizontal 
-# display(sidebyside) #display the widget
+
 
 import time
 from RobotClass import Robot
