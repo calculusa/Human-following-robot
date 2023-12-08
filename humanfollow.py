@@ -6,18 +6,21 @@ import numpy as np
 import cv2
 import os
 import ctypes
-    
+
+# Define mean and standard deviation values for image preprocessing 
 mean = 255.0 * np.array([0.5, 0.5, 0.5])
 stdev = 255.0 * np.array([0.5, 0.5, 0.5])
 
+# Takes a BGR image from the camera
 def bgr8_to_ssd_input(camera_value):
     x = camera_value
     x = cv2.cvtColor(x, cv2.COLOR_BGR2RGB)
-    x = x.transpose((2, 0, 1)).astype(np.float32)
+    x = x.transpose((2, 0, 1)).astype(np.float32) # The image dimensions are transposed from (height, width, channels) to (channels, height, width). 
     x -= mean[:, None, None]
     x /= stdev[:, None, None]
     return x[None, ...]
 
+# This class encapsulates an object detection model using TensorRT
 class ObjectDetector(object):
     
     def __init__(self, engine_path, preprocess_fn=bgr8_to_ssd_input):
@@ -36,9 +39,6 @@ class ObjectDetector(object):
 
 model = ObjectDetector('ssd_mobilenet_v2_coco.engine')
 
-#use traitlets and widgets to display the image in Jupyter Notebook
-import traitlets
-from traitlets.config.configurable import SingletonConfigurable
 
 #use opencv to covert the depth image to RGB image for displaying purpose
 import cv2
@@ -164,7 +164,6 @@ def processing(change):
         y_max = int(height * bbox[3])
         tempi =image[y_min:y_max,x_min:x_max]
         depthi = camera.depth_image[y_min:y_max,x_min:x_max]
-#         depthi_display = cv2.applyColorMap(cv2.convertScaleAbs(depthi, alpha=0.03), cv2.COLORMAP_JET)
         
         depthi[depthi<100]=0
         depthi[depthi>3000]=0
@@ -172,9 +171,7 @@ def processing(change):
         
         depthi[0,0]=5000 
         depthi = depthi[depthi!=0]
-#         depthi = 
         
-#         distance = np.median(depthi)
         distance = depthi.min()
         cv2.putText(image, str(distance), (int((x_min+x_max)/2),int((y_min+y_max)/2)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
         
@@ -202,13 +199,8 @@ def processing(change):
                 robot.stop()
             time.sleep(0.01)
         
-#     display_color.value = bgr8_to_jpeg(cv2.resize(image,(160,120)))
-#     display_depth.value = bgr8_to_jpeg(cv2.resize(depthi_display2,(160,120)))
+
     
 #the camera.observe function will monitor the color_value variable. If this value changes, the excecute function will be excuted.
 camera.observe(processing, names='color_value')
 
-# camera.unobserve_all()
-# camera.stop()
-# time.sleep(1.0)
-# robot.stop()
