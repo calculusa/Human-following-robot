@@ -168,22 +168,27 @@ def processing(change):
         depthi[depthi<100]=0
         depthi[depthi>3000]=0
         depthi_display2 = cv2.applyColorMap(cv2.convertScaleAbs(depthi, alpha=0.03), cv2.COLORMAP_JET)
-        
+
+        # Thresholding the depth image to focus on a specific range
         depthi[0,0]=5000 
         depthi = depthi[depthi!=0]
-        
+
+        # Calculate the minimum depth value (distance)
         distance = depthi.min()
         cv2.putText(image, str(distance), (int((x_min+x_max)/2),int((y_min+y_max)/2)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
         
-        
+    
+        # Update the target person position and distance if a closer person is detected
         if distance < target_distance:
             target_distance = distance
             target_personx = (x_min + x_max)/2  
 
+    # If no matching detections, stop the robot
     if len(matching_detections)==0:
         robot.stop()
         time.sleep(0.01)
     else:
+        # Adjust robot movement based on the target person's position and distance
         if target_personx < 200:
             robot.left(0.7)
             time.sleep(0.01)
