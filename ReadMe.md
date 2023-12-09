@@ -71,9 +71,11 @@ Real-World Testing Insights
 Key Learning 
 - Integration of Computer Vision and Robotics
 - Real-World Challenges in Human-Robot Interaction
+  
 Areas for Improvement
 - Fine-Tuning Object Detection for Varied Environments
 - Enhancing Adaptability to Unforeseen Scenarios
+- 
 Future Iterations
 - Continuous Refinement and Updates
 - Exploration of Advanced Sensor Technologies
