@@ -75,7 +75,7 @@ Key Learning
 Areas for Improvement
 - Fine-Tuning Object Detection for Varied Environments
 - Enhancing Adaptability to Unforeseen Scenarios
-- 
+  
 Future Iterations
 - Continuous Refinement and Updates
 - Exploration of Advanced Sensor Technologies
